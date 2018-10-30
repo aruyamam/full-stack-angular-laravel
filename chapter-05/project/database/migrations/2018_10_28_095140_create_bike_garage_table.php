@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBikesTable extends Migration
+class CreateBikeGarageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class CreateBikesTable extends Migration
      */
     public function up()
     {
-        Schema::create('bikes', function (Blueprint $table) {
+        Schema::create('bike_garage', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('make');
-            $table->string('model');
-            $table->string('year');
-            $table->text('mods');
-            $table->string('picture');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('builder_id');
+            $table->integer('bike_id');
+            $table->integer('garage_id');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ class CreateBikesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bikes');
+        Schema::dropIfExists('bike_garage');
     }
 }

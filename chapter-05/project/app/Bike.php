@@ -37,6 +37,12 @@ use Illuminate\Database\Eloquent\Model;
  *          type="string",
  *          description="Bike image URL",
  *          example="http://www.sample.com/my.bike.jpg"
+ *      ),
+ *      @SWG\Property(
+ *          property="builder_id",
+ *          type="integer",
+ *          description="Association with: builder_id",
+ *          example="1"
  *      )
  * )
  */
@@ -49,10 +55,38 @@ class Bike extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'make',
         'model',
         'year',
         'mods',
-        'picture'
+        'picture',
+        'builder_id'
     ];
+
+    /**
+     * Relationship.
+     * 
+     * @var string
+     */
+
+     public function builder() {
+         return $this->belongsTo('App\Builder');
+     }
+
+     public function items() {
+         return $this->hasMany('App\Item');
+     }
+
+     public function garages() {
+         return $this->belongsToMany('App\Garage');
+     }
+
+     public function user() {
+         return $this->belongsTo('App\User');
+     }
+
+     public function ratings() {
+         return $this->hasMany('App\Rating');
+     }
 }
