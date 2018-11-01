@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Bike;
+use Validator;
 
 class ItemController extends Controller
 {
@@ -68,6 +69,17 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'make' => 'required',
+            'model' => 'required',
+            'year' => 'required',
+            'mods' => 'required',
+            'builder_id' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
         $createBike = Bike::create($request->all());
         return $createBike;
     }

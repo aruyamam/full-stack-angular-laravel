@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Builder;
+use Validator;
 
 class BuilderController extends Controller
 {
@@ -72,6 +73,14 @@ class BuilderController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'requried',
+            'description' => 'requried',
+            'location' => 'requried'
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
         $createBuilder = Builder::create($request->all());
         return $createBuilder;
     }
